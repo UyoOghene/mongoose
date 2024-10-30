@@ -76,7 +76,24 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+productSchema.methods.greet = function(){
+    console.log('hellllooooooo')
+    console.log(this.name)
+}
+// const p = new Product({ name: "glasses", price: 20, categories:['cycling','safety', 123]});
+
+
+
 const Product = mongoose.model('Product', productSchema);
+
+const findproduct = async () => {
+    const foundProduct = await Product.findOne({name: 'Jersey'});
+    foundProduct.greet();
+
+}
+findproduct()
+// const bike = new Product({ name: "bike shoes", price: 10, categories:['cycling','safety', 123]});
+
 
 // const bike = new Product({ name: "bike shoes", price: 10, categories:['cycling','safety', 123]});
 // bike.save()
@@ -87,15 +104,15 @@ const Product = mongoose.model('Product', productSchema);
 //     .catch(err => {
 //         console.log(err);
 //     });
-const bike = new Product({ name: "Jersey", price: 20, size:'XS', categories:['cycling','safety', 123]});
-bike.save()
-    .then(data => {
-        console.log('it worked');
-        console.log(data);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// const bike = new Product({ name: "Jersey", price: 20, size:'XS', categories:['cycling','safety', 123]});
+// bike.save()
+//     .then(data => {
+//         console.log('it worked');
+//         console.log(data);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
 // Product.findOneAndUpdate(
 //     { name: "bike shoes" },
 //     { price: -3333},
