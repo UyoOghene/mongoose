@@ -50,12 +50,18 @@ const productSchema = new mongoose.Schema({
     price:{
         type: Number,
         required: false,
-        min:0     
+        min:[0, 'price must be positive']    
     },
     onSale :{
        type: Boolean,
        default: true
 
+    },
+    
+    size: {
+        type : String,
+        enum: ['S', 'M', 'L']
+    
     },
     categories: [String],
     qty: {
@@ -81,18 +87,27 @@ const Product = mongoose.model('Product', productSchema);
 //     .catch(err => {
 //         console.log(err);
 //     });
-Product.findOneAndUpdate(
-    { name: "bike shoes" },
-    { price: 300},
-    { new: true, runValidators: true }    
-)
-.then(data => {
-    console.log('Update successful');
-    console.log(data);
-})
-.catch(err => {
-    console.log('Error:', err);
-});
+const bike = new Product({ name: "Jersey", price: 20, size:'XS', categories:['cycling','safety', 123]});
+bike.save()
+    .then(data => {
+        console.log('it worked');
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+// Product.findOneAndUpdate(
+//     { name: "bike shoes" },
+//     { price: -3333},
+//     { new: true, runValidators: true }    
+// )
+// .then(data => {
+//     console.log('Update successful');
+//     console.log(data);
+// })
+// .catch(err => {
+//     console.log('Error:', err);
+// });
 
 //     mongosh
 // use shopApp               # Switch to the database where data is saved
