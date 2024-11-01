@@ -76,6 +76,16 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+productSchema.methods.addCategory = function (newCat) {
+    this.categories.push(newCat);
+    return this.save()
+}
+
+productSchema.methods.toggleOnsale = function (){
+    this.onSale = !this.onSale;
+   return this.save();
+}
+
 productSchema.methods.greet = function(){
     console.log('hellllooooooo')
     console.log(this.name)
@@ -88,7 +98,14 @@ const Product = mongoose.model('Product', productSchema);
 
 const findproduct = async () => {
     const foundProduct = await Product.findOne({name: 'Jersey'});
-    foundProduct.greet();
+    console.log(foundProduct)
+    await foundProduct.toggleOnsale();
+    console.log(foundProduct)
+
+    await foundProduct.addCategory('outdoors');
+
+    console.log(foundProduct)
+
 
 }
 findproduct()
